@@ -1,0 +1,4 @@
+VERSION 0.1.1
+------------
+
+2015-01-05: Changed method name on method getList to getBggList due to possible conflicts.

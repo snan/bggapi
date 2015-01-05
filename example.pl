@@ -33,5 +33,5 @@ my @data3;
 my $geeklist = BggList->new();
 
 # Get Geeklist
-@data3 = $geeklist->getList(49088);
+@data3 = $geeklist->getBggList(49088);
 print Dumper (@data3);

@@ -1,5 +1,5 @@
 
- Moose based Perl module for BGG API connections version 0.1. 
+ Moose based Perl module for BGG API connections version 0.1.1 
  ----
 
  I am not used to building modules for Perl also this is a basic version so I have not submitted it to cpan etc. There is a lot left todo.

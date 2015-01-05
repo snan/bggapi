@@ -1,6 +1,6 @@
 # Moose based Perl module for BGG API connections
-# Version 0.1 
-# Copyright 2014 Virre Linwendil Annergård
+# Version 0.2 
+# Copyright 2014-2015 Virre Linwendil Annergård
 # Contact: virre.annergard@gmail.com
 #
 # This libary is released under the GNU GPL Ver 3
@@ -98,7 +98,7 @@
     use Moose; 
     use LWP::Simple;
     use XML::Simple;
-
+    
     sub callBggApi {
 	my $call = $_[0];
 	my $value = $_[1];
@@ -125,17 +125,18 @@
     use Moose; 
     use LWP::Simple;
     use XML::Simple;
+    use Data::Dumper;
 
     sub callBggApi {
 	my $call = $_[0];
 	my $value = $_[1];
 	my $options = $_[2];
-	my $base_url = 'http://www.boardgamegeek.com/xmlapi/';
+	my $base_url = 'https://www.boardgamegeek.com/xmlapi/';
 	my $data = get("$base_url$call/$value");
 	return $data;
     }
 
-    sub getList {
+    sub getBggList {
 	my $self = shift;
 	my $xml_raw = callBggApi('geeklist/', $_[0]);
 	my $parser = new XML::Simple;
