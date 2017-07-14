@@ -1,13 +1,13 @@
 
- Moose based Perl module for BGG API connections version 0.1.1 
+ Moose based Perl module for BGG API connections version 0.3
  ----
 
- I am not used to building modules for Perl also this is a basic version so I have not submitted it to cpan etc. There is a lot left todo.
-----
  Requirements
  Moose
- XML::Simple
+ ~~XML::Simple~~ (Removed in version 0.3)
+ XML::LibXML
  LWP::Simple
+ LWP::UserAgent
 
 ----
  Installation
@@ -17,14 +17,17 @@
 ----
  Usage 
  
- Use BoardGameGeek and call the functions as seen in example.pl. 
-
+ Use BoardGameGeek and call the functions as seen in example.pl. These will from version 0.3 return hashrefs. 
 ----
  Todo 
 
+ Move all Requests to LWP:UserAgent instead of LWP::Simple.
  Move callBggApi to a main class to inherit from.
- Better search. 
- Get forum api to work 
+ Better search.
+ Skip none boardgames/expansions from getCollection
+ Add Status to return hash from getCollection
+ Add forum support 
+ Add Tests
 ----
 
  License 
