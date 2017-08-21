@@ -1,5 +1,5 @@
 # Moose based Perl module for BGG API connections
-# Version 0.3 
+# Version 0.3
 # Copyright 2014-2017 Virre Linwendil Annergård
 # Contact: virre.annergard@gmail.com
 #
@@ -62,7 +62,7 @@
 		for my $child (@children) {
 			my $name = $child->nodeName;
 			next if $name eq 'poll';
-			$output{$id}{$name} = $boardgame->getElementsByTagName($name)->string_value; 
+			$output{$id}{$name} = $boardgame->getElementsByTagName($name)->string_value;
 		}
 	}
 	return \%output;
@@ -71,8 +71,8 @@
 }
 
 {
-    package BggUser; 
-    use Moose; 
+    package BggUser;
+    use Moose;
     use LWP::UserAgent;
     use XML::LibXML;
 
@@ -83,13 +83,13 @@
 	my $options = $_[2];
 	my $uri = "https://www.boardgamegeek.com/xmlapi/$call/$value";
 	my $response = $ua->get($uri);
-	if ($response->code eq '200') { 
+	if ($response->code eq '200') {
 		my $data = $response->decoded_content;
 		return -2 if $data =~ m/\<error\>/;
 		return $data;
-	} elsif ($response->code eq '202') { 
+	} elsif ($response->code eq '202') {
 		return -1;
-	} else { 
+	} else {
 		return -2;
 	}
     }
@@ -97,8 +97,8 @@
     sub getCollection {
 	my $self = shift;
 	my $xml_raw = callBggApi('collection/', $_[0],$_[1]);
-	if ($xml_raw eq -1) { 
-		die("Request to create data have been sent to BGG but not processed, please try again later");	
+	if ($xml_raw eq -1) {
+		die("Request to create data have been sent to BGG but not processed, please try again later");
 	} elsif ($xml_raw eq -2 ) {
 		die("Unknown issue created request for collection to fail");
 	}
@@ -119,8 +119,8 @@
 				my $status;
 				if ($child->getAttribute('own') eq 1) {
 					$status = 'Owned';
-				} elsif ($child->getAttribute('wishlist') eq 1) { 
-					$status = 'Wishlist';	
+				} elsif ($child->getAttribute('wishlist') eq 1) {
+					$status = 'Wishlist';
 				} else {
 					delete $output{$id};
 					last;
@@ -129,10 +129,10 @@
 			} elsif ($name eq 'stats') {
 				# TODO: Add the stats to return hash.
 				next;
-			}  else { 
+			}  else {
 				$output{$id}{$name} = $boardgame->getElementsByTagName($name)->string_value;
 			}
-		}	
+		}
 	}
 	return \%output;
     }
@@ -142,8 +142,8 @@
 
 
 {
-    package BggList; 
-    use Moose; 
+    package BggList;
+    use Moose;
     use LWP::Simple;
     use XML::LibXML;
 
@@ -158,7 +158,7 @@
 
     sub getBggList {
 	my $self = shift;
-	my $id = $_[0];	
+	my $id = $_[0];
 	my $xml_raw = callBggApi('geeklist/', $id);
     	my $parser = new XML::LibXML;
 	my $dom = $parser->load_xml(string => $xml_raw);
@@ -170,7 +170,7 @@
 		my $body = $item->getElementsByTagName('body')->string_value;
 		# There seems to be some random false entries in the api with this as the body so...
 		next if $body =~ m/This page is torn up with some script that will not get it to load. I need to create dummy entries in order to force it to page/;
-		my $entry_id = $item->{id};	
+		my $entry_id = $item->{id};
 		my %entry = (
 			'poster' => $item->{username},
 			'imageid' => $item->{imageid},
@@ -180,8 +180,8 @@
 			'thumbs' => $item->{'thumbs'},
 			'entry_text' => $body,
 		);
-		$output{$entry_id}{$entry_id} = \%entry;		
-	}	
+		$output{$entry_id}{$entry_id} = \%entry;
+	}
     	return \%output;
     }
     no Moose;
